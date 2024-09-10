@@ -1,0 +1,7 @@
+C:\Users\ilefj\source\repos\application\application\obj\Debug\net8.0\RestaurantApi.csproj.AssemblyReference.cache
+C:\Users\ilefj\source\repos\application\application\obj\Debug\net8.0\RestaurantApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ilefj\source\repos\application\application\obj\Debug\net8.0\RestaurantApi.AssemblyInfoInputs.cache
+C:\Users\ilefj\source\repos\application\application\obj\Debug\net8.0\RestaurantApi.AssemblyInfo.cs
+C:\Users\ilefj\source\repos\application\application\obj\Debug\net8.0\RestaurantApi.csproj.CoreCompileInputs.cache
+C:\Users\ilefj\source\repos\application\application\obj\Debug\net8.0\RestaurantApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\ilefj\source\repos\application\application\obj\Debug\net8.0\RestaurantApi.MvcApplicationPartsAssemblyInfo.cache
