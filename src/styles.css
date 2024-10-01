@@ -1,0 +1,20 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "~primeng/resources/themes/saga-blue/theme.css"; /* ou un autre thème */
+@import "~primeng/resources/primeng.min.css";
+@import "~primeicons/primeicons.css";
+
+/* Order */
+@layer reset, primeng;
+
+/* Reset CSS */
+@layer reset {
+    button,
+    input {
+        /* Ajoutez ici votre CSS de réinitialisation */
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* Autres propriétés à réinitialiser */
+    }
+}

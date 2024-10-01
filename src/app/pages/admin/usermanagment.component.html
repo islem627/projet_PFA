@@ -1,0 +1,35 @@
+<!--
+besoin : 
+-l'acces sur cette page depuis la page principale(recherche routing des composants).
+-cote html rajout des éléments depuis primeng(tableau,donnee en dure).
+-creation requette get (api/service"userManagment":getuser).
+-affichage des donnees dans le componsant userManagment.-->
+
+
+<div class="card">
+  
+
+<p-table [value]="users">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>id</th>
+        <th>email</th>
+        <th>password</th>
+        <th>type</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.type }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  </div>
+  <div class="card flex justify-content-center">
+    <p-button label="Submit" />
+    <p-button label="Update" />
+    <p-button label="Delete" />
+</div>
