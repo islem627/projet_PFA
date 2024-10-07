@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {UserManagementComponent} from './pages/admin/usermanagment.component';
-const routes: Routes = [
-  { path: 'admin', component: UserManagementComponent }
+import {UserManagementComponent} from './pages/admin/UserManagement.component';
+export const routes: Routes = [
+  { path: 'admin', component: UserManagementComponent },
+  { path: '', redirectTo: '/usermanagement', pathMatch: 'full' }
+
 ];
 
 @NgModule({
@@ -10,4 +12,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+
+
 

@@ -13,9 +13,9 @@ besoin :
     <ng-template pTemplate="header">
       <tr>
         <th>id</th>
-        <th>email</th>
-        <th>password</th>
-        <th>type</th>
+        <th>Email</th>
+        <th>Password</th>
+        
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-user>
@@ -23,13 +23,13 @@ besoin :
         <td>{{ user.id }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.password }}</td>
-        <td>{{ user.type }}</td>
+        <td>{{ user.type.join(', ') }}</td>
       </tr>
     </ng-template>
   </p-table>
   </div>
   <div class="card flex justify-content-center">
-    <p-button label="Submit" />
-    <p-button label="Update" />
-    <p-button label="Delete" />
-</div>
+    <p-button label="Submit" class="spaced-button" (click)="submitUser()"></p-button>
+    <p-button label="Update" class="spaced-button" (click)="updateUser()"></p-button>
+    <p-button label="Delete" class="spaced-button" (click)="deleteUser(selectedUser.id)"></p-button>
+  </div>

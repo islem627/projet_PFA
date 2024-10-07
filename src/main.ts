@@ -1,11 +1,12 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
-import { UsermanagmentComponent } from './app/pages/admin/usermanagment.component'; // Assurez-vous que le chemin est correct
+import { importProvidersFrom } from '@angular/core';
+import { AppRoutingModule } from './app/app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { TableModule } from 'primeng/table';
 
-/*import { environment } from 'src/environments/environment';
-if (environment.production) {
-  enableProdMode();
-}*/
-bootstrapApplication(UsermanagmentComponent)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(AppRoutingModule, HttpClientModule, TableModule)
+  ]
+}).catch(err => console.error(err));

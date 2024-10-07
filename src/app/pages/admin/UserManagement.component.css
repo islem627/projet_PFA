@@ -1,0 +1,12 @@
+.justify-right {
+    display: flex;
+    justify-content: flex-end; /* Aligne les boutons à droite */
+}
+
+.spaced-button {
+    margin-right: 10px; /* Espace entre les boutons */
+}
+
+.spaced-button:last-child {
+    margin-right: 0; /* Pas de marge pour le dernier bouton */
+}
