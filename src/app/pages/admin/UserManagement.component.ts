@@ -1,77 +1,97 @@
-import { Component, OnInit } from '@angular/core';
-import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { User } from '../../Models/user.model'; 
+import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api'; 
-import { UserManagementService } from '../../services/User-Management.service'; // Corrected import path
-import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse for type safety
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { UserManagementService } from '../../services/User-Management.service';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 @Component({
   selector: 'app-usermanagment',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule],
+  imports: [CommonModule,
+    FormsModule,
+    TableModule,
+    ButtonModule,
+    DialogModule,DropdownModule],
   templateUrl: './UserManagement.component.html',
-  styleUrls: ['./UserManagement.component.css'], // Corrected to 'styleUrls'
+  styleUrls: ['./UserManagement.component.css'],
   providers: [UserManagementService, MessageService]
+
 })
-export class UserManagementComponent implements OnInit {
-  users: User[] = [];
+export class UserManagementComponent {
+  //table
+  users: User[] = [
+    { id: 1, email: 'artisant@example.com', password: '1234', type: ['Restaurant'] },
+    { id: 2, email: 'livreur@example.com', password: '1234', type: ['Livreur'] },
+    { id: 3, email: 'client@example.com', password: '1234', type: ['Client'] },
+  ];
+  userTypes: string[] = ['Client', 'Livreur', 'Restaurant'];
   selectedUser: User = { id: 0, email: '', password: '', type: [] };
-
-  constructor(
-    private userManagementService: UserManagementService,  // Corrected variable name
-    private messageService: MessageService
-  ) {}
-
-  ngOnInit(): void {
-    this.fetchUsers();
+  userDialog: boolean = false;
+  constructor(private userManagementService: UserManagementService) {}
+  ngOnInit() {
+    this.userManagementService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+     //table
+    this.initUsers(); 
+  }
+  
+  openNew() {
+    this.selectedUser = { id: 0, email: '', password: '', type: [] };
+    this.userDialog = true;
+  }
+   //table
+  initUsers() {
+    const storedUsers = localStorage.getItem('users');
+    if (storedUsers) {
+      this.users = JSON.parse(storedUsers);
+    } else {
+      this.users = [
+        { id: 1, email: 'artisant@example.com', password: '1234', type: ['Restaurant'] },
+        { id: 2, email: 'livreur@example.com', password: '1234', type: ['Livreur'] },
+        { id: 3, email: 'client@example.com', password: '1234', type: ['Client'] },
+      ];
+    }
+  }
+  editUser(user: User) {
+     //table
+    this.selectedUser = { ...user };
+    this.userManagementService.updateUser(this.selectedUser).subscribe(() => {
+    });
+    this.userDialog = true;
   }
 
-  fetchUsers(): void {
-    this.userManagementService.getUsers().subscribe(
-      (data: User[]) => {
-        this.users = data;
-      },
-      (error: HttpErrorResponse) => {  // Explicitly typed error as HttpErrorResponse
-        console.error('Error fetching users', error);
-      }
-    );
+  saveUser() {
+     //table
+    if (this.selectedUser.id) {
+      const index = this.users.findIndex(user => user.id === this.selectedUser.id);
+      this.users[index] = this.selectedUser;
+    } else {
+      this.selectedUser.id = this.users.length + 1; 
+      this.users.push(this.selectedUser);
+    }
+    this.userManagementService.addUser(this.selectedUser).subscribe(() => {
+    });
+     //table
+    localStorage.setItem('users', JSON.stringify(this.users));
+    this.userDialog = false; 
+    this.userDialog = false; 
   }
 
-  submitUser(): void {
-    this.userManagementService.addUser(this.selectedUser).subscribe(
-      () => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User added successfully' });
-        this.fetchUsers();
-      },
-      (error: HttpErrorResponse) => {  // Explicitly typed error as HttpErrorResponse
-        console.error('Error adding user', error);
-      }
-    );
+  hideDialog() {
+    this.userDialog = false;
   }
 
-  updateUser(): void {
-    this.userManagementService.updateUser(this.selectedUser).subscribe(
-      () => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User updated successfully' });
-        this.fetchUsers();
-      },
-      (error: HttpErrorResponse) => {  // Explicitly typed error as HttpErrorResponse
-        console.error('Error updating user', error);
-      }
-    );
-  }
-
-  deleteUser(id: number): void {
-    this.userManagementService.deleteUser(id).subscribe(
-      () => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User deleted successfully' });
-        this.fetchUsers();
-      },
-      (error: HttpErrorResponse) => {  // Explicitly typed error as HttpErrorResponse
-        console.error('Error deleting user', error);
-      }
-    );
+  deleteUser(id: number) {
+    this.userManagementService.deleteUser(id).subscribe(() => {
+    });
+     //table
+    this.users = this.users.filter(user => user.id !== id);
   }
 }
